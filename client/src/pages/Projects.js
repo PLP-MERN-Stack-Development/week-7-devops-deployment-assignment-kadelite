@@ -8,7 +8,7 @@ const Projects = () => {
     {
       title: 'E-Commerce Platform',
       description: 'A full-stack e-commerce platform built with React, Node.js, and MongoDB. Features include user authentication, product management, shopping cart, and payment integration.',
-      image: 'https://via.placeholder.com/400x250/3B82F6/FFFFFF?text=E-Commerce',
+      image: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=400&h=250&fit=crop&crop=center',
       technologies: ['React', 'Node.js', 'MongoDB', 'Stripe'],
       github: 'https://github.com/kadelite/ecommerce',
       live: 'https://ecommerce-demo.com',
@@ -17,7 +17,7 @@ const Projects = () => {
     {
       title: 'Task Management App',
       description: 'A collaborative task management application with real-time updates, team collaboration, and project tracking features.',
-      image: 'https://via.placeholder.com/400x250/8B5CF6/FFFFFF?text=Task+App',
+      image: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=400&h=250&fit=crop&crop=center',
       technologies: ['React', 'Socket.io', 'Express', 'PostgreSQL'],
       github: 'https://github.com/kadelite/task-app',
       live: 'https://task-app-demo.com',
@@ -26,7 +26,7 @@ const Projects = () => {
     {
       title: 'Mobile Fitness Tracker',
       description: 'A React Native mobile app for tracking workouts, nutrition, and fitness goals with social features and progress analytics.',
-      image: 'https://via.placeholder.com/400x250/10B981/FFFFFF?text=Fitness+App',
+      image: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=250&fit=crop&crop=center',
       technologies: ['React Native', 'Firebase', 'Redux', 'Charts.js'],
       github: 'https://github.com/kadelite/fitness-app',
       live: null,
@@ -35,7 +35,7 @@ const Projects = () => {
     {
       title: 'Portfolio Website',
       description: 'A modern, responsive portfolio website built with React and Tailwind CSS. Features include dark mode, animations, and contact forms.',
-      image: 'https://via.placeholder.com/400x250/F59E0B/FFFFFF?text=Portfolio',
+      image: 'https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=400&h=250&fit=crop&crop=center',
       technologies: ['React', 'Tailwind CSS', 'Framer Motion', 'Radix UI'],
       github: 'https://github.com/kadelite/portfolio',
       live: 'https://adeleke-portfolio.com',
@@ -44,7 +44,7 @@ const Projects = () => {
     {
       title: 'Weather Dashboard',
       description: 'A weather dashboard that displays current weather conditions, forecasts, and historical data with interactive charts and maps.',
-      image: 'https://via.placeholder.com/400x250/EF4444/FFFFFF?text=Weather+App',
+      image: 'https://images.unsplash.com/photo-1592210454359-9043f067919b?w=400&h=250&fit=crop&crop=center',
       technologies: ['Vue.js', 'Chart.js', 'OpenWeather API', 'Leaflet'],
       github: 'https://github.com/kadelite/weather-app',
       live: 'https://weather-dashboard.com',
@@ -53,10 +53,37 @@ const Projects = () => {
     {
       title: 'AI Chat Assistant',
       description: 'An AI-powered chat assistant built with Python and machine learning. Features natural language processing and context awareness.',
-      image: 'https://via.placeholder.com/400x250/06B6D4/FFFFFF?text=AI+Chat',
+      image: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?w=400&h=250&fit=crop&crop=center',
       technologies: ['Python', 'TensorFlow', 'Flask', 'WebSocket'],
       github: 'https://github.com/kadelite/ai-chat',
       live: 'https://ai-chat-demo.com',
+      category: 'ai'
+    },
+    {
+      title: 'Social Media Analytics',
+      description: 'A comprehensive analytics dashboard for social media management with real-time data visualization and reporting tools.',
+      image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&h=250&fit=crop&crop=center',
+      technologies: ['React', 'D3.js', 'Node.js', 'Redis'],
+      github: 'https://github.com/kadelite/social-analytics',
+      live: 'https://social-analytics-demo.com',
+      category: 'web'
+    },
+    {
+      title: 'Food Delivery App',
+      description: 'A mobile application for food delivery with real-time tracking, payment processing, and restaurant management features.',
+      image: 'https://images.unsplash.com/photo-1551218808-94e220e084d2?w=400&h=250&fit=crop&crop=center',
+      technologies: ['React Native', 'Google Maps API', 'Stripe', 'Firebase'],
+      github: 'https://github.com/kadelite/food-delivery',
+      live: null,
+      category: 'mobile'
+    },
+    {
+      title: 'Machine Learning Model',
+      description: 'A predictive analytics model for customer behavior analysis using advanced machine learning algorithms and data processing.',
+      image: 'https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?w=400&h=250&fit=crop&crop=center',
+      technologies: ['Python', 'Scikit-learn', 'Pandas', 'Jupyter'],
+      github: 'https://github.com/kadelite/ml-model',
+      live: 'https://ml-demo.com',
       category: 'ai'
     }
   ];
@@ -119,9 +146,26 @@ const Projects = () => {
           ))}
         </motion.div>
 
-        {/* Projects Grid */}
+                {/* Projects Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {filteredProjects.map((project, index) => (
+          {filteredProjects.length === 0 ? (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              className="col-span-full text-center py-12"
+            >
+              <div className="text-gray-500 text-lg mb-4">
+                No projects found in this category.
+              </div>
+              <button
+                onClick={() => setActiveCategory('all')}
+                className="btn-primary"
+              >
+                View All Projects
+              </button>
+            </motion.div>
+          ) : (
+            filteredProjects.map((project, index) => (
             <motion.div
               key={project.title}
               initial={{ opacity: 0, y: 20 }}
@@ -133,7 +177,8 @@ const Projects = () => {
                   <img
                     src={project.image}
                     alt={project.title}
-                    className="w-full h-48 object-cover"
+                    className="w-full h-48 object-cover transition-transform duration-300 hover:scale-105"
+                    loading="lazy"
                   />
                   <div className="absolute inset-0 bg-black bg-opacity-0 hover:bg-opacity-20 transition-all duration-300 flex items-center justify-center">
                     <div className="opacity-0 hover:opacity-100 transition-opacity duration-300 flex space-x-4">
@@ -207,20 +252,9 @@ const Projects = () => {
                 </div>
               </div>
             </motion.div>
-          ))}
+            ))
+          )}
         </div>
-
-        {filteredProjects.length === 0 && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="text-center py-12"
-          >
-            <p className="text-gray-500 text-lg">
-              No projects found in this category.
-            </p>
-          </motion.div>
-        )}
       </div>
     </div>
   );

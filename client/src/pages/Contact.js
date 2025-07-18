@@ -17,6 +17,12 @@ const Contact = () => {
     message: '',
     rating: 5
   });
+  const [contactForm, setContactForm] = useState({
+    name: '',
+    email: '',
+    message: ''
+  });
+  const [contactLoading, setContactLoading] = useState(false);
 
   useEffect(() => {
     fetchComments();
@@ -52,6 +58,21 @@ const Contact = () => {
     }
   };
 
+  const handleContactSubmit = async (e) => {
+    e.preventDefault();
+    setContactLoading(true);
+    
+    try {
+      await axios.post('/api/contact', contactForm);
+      success('Message sent successfully! I will get back to you soon.');
+      setContactForm({ name: '', email: '', message: '' });
+    } catch (err) {
+      error(err.response?.data?.message || 'Failed to send message');
+    } finally {
+      setContactLoading(false);
+    }
+  };
+
   const contactInfo = [
     {
       icon: <Mail className="w-6 h-6" />,
@@ -68,8 +89,8 @@ const Contact = () => {
     {
       icon: <Phone className="w-6 h-6" />,
       title: 'Phone',
-      value: '+234 XXX XXX XXXX',
-      link: 'tel:+234XXXXXXXXX'
+      value: '+2348130935473',
+      link: 'tel:+2348130935473'
     }
   ];
 
@@ -182,15 +203,18 @@ const Contact = () => {
                 </p>
               </div>
               <div>
-                <form className="space-y-4">
+                <form onSubmit={handleContactSubmit} className="space-y-4">
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
                       Name
                     </label>
                     <input
                       type="text"
+                      value={contactForm.name}
+                      onChange={(e) => setContactForm({ ...contactForm, name: e.target.value })}
                       className="input-field"
                       placeholder="Your name"
+                      required
                     />
                   </div>
                   <div>
@@ -199,8 +223,11 @@ const Contact = () => {
                     </label>
                     <input
                       type="email"
+                      value={contactForm.email}
+                      onChange={(e) => setContactForm({ ...contactForm, email: e.target.value })}
                       className="input-field"
                       placeholder="your@email.com"
+                      required
                     />
                   </div>
                   <div>
@@ -209,16 +236,26 @@ const Contact = () => {
                     </label>
                     <textarea
                       rows={4}
+                      value={contactForm.message}
+                      onChange={(e) => setContactForm({ ...contactForm, message: e.target.value })}
                       className="input-field resize-none"
                       placeholder="Tell me about your project..."
+                      required
                     />
                   </div>
                   <button
                     type="submit"
+                    disabled={contactLoading}
                     className="btn-primary w-full flex items-center justify-center space-x-2"
                   >
-                    <Send className="w-4 h-4" />
-                    <span>Send Message</span>
+                    {contactLoading ? (
+                      <div className="loading-spinner"></div>
+                    ) : (
+                      <>
+                        <Send className="w-4 h-4" />
+                        <span>Send Message</span>
+                      </>
+                    )}
                   </button>
                 </form>
               </div>

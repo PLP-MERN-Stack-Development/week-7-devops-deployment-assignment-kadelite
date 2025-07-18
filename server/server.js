@@ -10,6 +10,7 @@ require('dotenv').config({ path: './config.env' });
 const authRoutes = require('./routes/auth');
 const commentRoutes = require('./routes/comments');
 const cvRoutes = require('./routes/cv');
+const contactRoutes = require('./routes/contact');
 
 const app = express();
 
@@ -45,6 +46,7 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use('/api/auth', authRoutes);
 app.use('/api/comments', commentRoutes);
 app.use('/api/cv', cvRoutes);
+app.use('/api/contact', contactRoutes);
 
 // Health check endpoint
 app.get('/api/health', (req, res) => {
