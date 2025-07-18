@@ -1,78 +1,198 @@
-[![Open in Visual Studio Code](https://classroom.github.com/assets/open-in-vscode-2e0aaae1b6195c2367325f4f02e2d04e9abb55f0b24a779b69b11b9e10269abc.svg)](https://classroom.github.com/online_ide?assignment_repo_id=19953577&assignment_repo_type=AssignmentRepo)
-# Deployment and DevOps for MERN Applications
+# Adeleke Adekunle - Portfolio Website
 
-This assignment focuses on deploying a full MERN stack application to production, implementing CI/CD pipelines, and setting up monitoring for your application.
+A modern, responsive portfolio website built with the MERN stack (MongoDB, Express.js, React.js, Node.js) featuring user authentication, comment system, and CV upload functionality.
 
-## Assignment Overview
+## 🌟 Features
 
-You will:
-1. Prepare your MERN application for production deployment
-2. Deploy the backend to a cloud platform
-3. Deploy the frontend to a static hosting service
-4. Set up CI/CD pipelines with GitHub Actions
-5. Implement monitoring and maintenance strategies
+### Frontend (React + Tailwind CSS + Radix UI)
+- **Modern Design**: Sleek, responsive design with gradient backgrounds and smooth animations
+- **User Authentication**: Login/Register system with JWT tokens
+- **Comment System**: Users can leave comments and ratings (requires approval)
+- **CV Upload**: Users can upload their CVs for potential employers
+- **Admin Panel**: Manage comments and CVs with approval workflow
+- **Responsive**: Fully responsive design that works on all devices
+- **Animations**: Smooth page transitions and hover effects using Framer Motion
 
-## Getting Started
+### Backend (Node.js + Express + MongoDB)
+- **RESTful API**: Complete API with authentication, comments, and CV management
+- **JWT Authentication**: Secure token-based authentication
+- **File Upload**: Multer middleware for CV file uploads
+- **Input Validation**: Express-validator for form validation
+- **Security**: Helmet, CORS, rate limiting, and other security measures
+- **MongoDB**: NoSQL database with Mongoose ODM
 
-1. Accept the GitHub Classroom assignment invitation
-2. Clone your personal repository that was created by GitHub Classroom
-3. Follow the setup instructions in the `Week7-Assignment.md` file
-4. Use the provided templates and configuration files as a starting point
+## 🚀 Quick Start
 
-## Files Included
+### Prerequisites
+- Node.js (v14 or higher)
+- MongoDB (local or cloud)
+- npm or pnpm
 
-- `Week7-Assignment.md`: Detailed assignment instructions
-- `.github/workflows/`: GitHub Actions workflow templates
-- `deployment/`: Deployment configuration files and scripts
-- `.env.example`: Example environment variable templates
-- `monitoring/`: Monitoring configuration examples
+### Installation
 
-## Requirements
+1. **Clone the repository**
+```bash
+git clone <repository-url>
+cd week-7-devops-deployment-assignment-kadelite
+```
 
-- A completed MERN stack application from previous weeks
-- Accounts on the following services:
-  - GitHub
-  - MongoDB Atlas
-  - Render, Railway, or Heroku (for backend)
-  - Vercel, Netlify, or GitHub Pages (for frontend)
-- Basic understanding of CI/CD concepts
+2. **Install Backend Dependencies**
+```bash
+cd server
+npm install
+```
 
-## Deployment Platforms
+3. **Install Frontend Dependencies**
+```bash
+cd ../client
+npm install
+```
 
-### Backend Deployment Options
-- **Render**: Easy to use, free tier available
-- **Railway**: Developer-friendly, generous free tier
-- **Heroku**: Well-established, extensive documentation
+4. **Environment Setup**
 
-### Frontend Deployment Options
-- **Vercel**: Optimized for React apps, easy integration
-- **Netlify**: Great for static sites, good CI/CD
-- **GitHub Pages**: Free, integrated with GitHub
+Create a `config.env` file in the server directory:
+```env
+PORT=5000
+MONGODB_URI=mongodb://localhost:27017/portfolio_db
+JWT_SECRET=your_jwt_secret_key_here_change_in_production
+NODE_ENV=development
+```
 
-## CI/CD Pipeline
+5. **Start the Development Servers**
 
-The assignment includes templates for setting up GitHub Actions workflows:
-- `frontend-ci.yml`: Tests and builds the React application
-- `backend-ci.yml`: Tests the Express.js backend
-- `frontend-cd.yml`: Deploys the frontend to your chosen platform
-- `backend-cd.yml`: Deploys the backend to your chosen platform
+Backend (Terminal 1):
+```bash
+cd server
+npm run dev
+```
 
-## Submission
+Frontend (Terminal 2):
+```bash
+cd client
+npm start
+```
 
-Your work will be automatically submitted when you push to your GitHub Classroom repository. Make sure to:
+The application will be available at:
+- Frontend: http://localhost:3000
+- Backend API: http://localhost:5000
 
-1. Complete all deployment tasks
-2. Set up CI/CD pipelines with GitHub Actions
-3. Deploy both frontend and backend to production
-4. Document your deployment process in the README.md
-5. Include screenshots of your CI/CD pipeline in action
-6. Add URLs to your deployed applications
+## 📁 Project Structure
 
-## Resources
+```
+week-7-devops-deployment-assignment-kadelite/
+├── client/                 # React Frontend
+│   ├── public/
+│   ├── src/
+│   │   ├── components/     # Reusable components
+│   │   ├── contexts/       # React contexts
+│   │   ├── pages/          # Page components
+│   │   └── ...
+│   ├── package.json
+│   └── tailwind.config.js
+├── server/                 # Node.js Backend
+│   ├── models/            # MongoDB models
+│   ├── routes/            # API routes
+│   ├── middleware/        # Custom middleware
+│   ├── uploads/           # File uploads directory
+│   ├── package.json
+│   └── server.js
+└── README.md
+```
 
-- [GitHub Actions Documentation](https://docs.github.com/en/actions)
-- [MongoDB Atlas Documentation](https://docs.atlas.mongodb.com/)
-- [Render Documentation](https://render.com/docs)
-- [Railway Documentation](https://docs.railway.app/)
-- [Vercel Documentation](https://vercel.com/docs)
-- [Netlify Documentation](https://docs.netlify.com/) 
+## 🔧 API Endpoints
+
+### Authentication
+- `POST /api/auth/register` - Register new user
+- `POST /api/auth/login` - Login user
+- `GET /api/auth/profile` - Get user profile (protected)
+- `PUT /api/auth/profile` - Update user profile (protected)
+
+### Comments
+- `GET /api/comments` - Get approved comments (public)
+- `POST /api/comments` - Create comment (protected)
+- `GET /api/comments/all` - Get all comments (admin)
+- `PUT /api/comments/:id/approve` - Approve/reject comment (admin)
+- `DELETE /api/comments/:id` - Delete comment (admin)
+
+### CV Management
+- `POST /api/cv/upload` - Upload CV (protected)
+- `GET /api/cv/my-cv` - Get user's CV (protected)
+- `GET /api/cv/download/:id` - Download CV (admin)
+- `GET /api/cv/all` - Get all CVs (admin)
+- `PUT /api/cv/:id/approve` - Approve/reject CV (admin)
+- `DELETE /api/cv/:id` - Delete CV (admin)
+
+## 🎨 Technologies Used
+
+### Frontend
+- **React 18** - UI library
+- **Tailwind CSS** - Utility-first CSS framework
+- **Radix UI** - Accessible component primitives
+- **Framer Motion** - Animation library
+- **React Router** - Client-side routing
+- **Axios** - HTTP client
+- **Lucide React** - Icon library
+
+### Backend
+- **Node.js** - JavaScript runtime
+- **Express.js** - Web framework
+- **MongoDB** - NoSQL database
+- **Mongoose** - MongoDB ODM
+- **JWT** - Authentication
+- **bcryptjs** - Password hashing
+- **multer** - File upload handling
+- **express-validator** - Input validation
+- **helmet** - Security headers
+- **cors** - Cross-origin resource sharing
+
+## 🔐 Security Features
+
+- JWT token authentication
+- Password hashing with bcrypt
+- Input validation and sanitization
+- Rate limiting
+- Security headers with helmet
+- CORS configuration
+- File upload restrictions
+- Protected routes
+
+## 📱 Responsive Design
+
+The website is fully responsive and optimized for:
+- Desktop (1200px+)
+- Tablet (768px - 1199px)
+- Mobile (320px - 767px)
+
+## 🚀 Deployment
+
+### Backend Deployment
+1. Set up MongoDB Atlas or local MongoDB
+2. Configure environment variables
+3. Deploy to platforms like Heroku, Railway, or DigitalOcean
+
+### Frontend Deployment
+1. Build the production version: `npm run build`
+2. Deploy to platforms like Vercel, Netlify, or GitHub Pages
+
+## 👤 Author
+
+**Adeleke Adekunle**
+- Email: mechatronics.samson@gmail.com
+- GitHub: https://github.com/kadelite
+- Location: Lagos, Nigeria
+
+## 📄 License
+
+This project is licensed under the MIT License.
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Commit your changes
+4. Push to the branch
+5. Create a Pull Request
+
+## 📞 Support
+
+For support, email mechatronics.samson@gmail.com or create an issue in the repository. 
