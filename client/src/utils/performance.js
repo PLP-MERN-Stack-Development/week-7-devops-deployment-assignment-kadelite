@@ -1,3 +1,4 @@
+import React from 'react';
 // Performance monitoring utilities
 export const measurePerformance = (name, fn) => {
   const start = performance.now();
