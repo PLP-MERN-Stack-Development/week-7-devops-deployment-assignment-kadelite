@@ -2,6 +2,8 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './contexts/AuthContext';
 import { ToastProvider } from './contexts/ToastContext';
+import { ErrorBoundary } from './utils/performance';
+import { registerServiceWorker } from './utils/performance';
 import Navbar from './components/Navbar';
 import Home from './pages/Home';
 import About from './pages/About';
@@ -17,11 +19,17 @@ import Footer from './components/Footer';
 import './App.css';
 
 function App() {
+  // Register service worker in production
+  React.useEffect(() => {
+    registerServiceWorker();
+  }, []);
+
   return (
-    <AuthProvider>
-      <ToastProvider>
-        <Router>
-          <div className="min-h-screen bg-background">
+    <ErrorBoundary>
+      <AuthProvider>
+        <ToastProvider>
+          <Router>
+            <div className="min-h-screen bg-background">
             <Navbar />
             <main className="flex-1">
               <Routes>
@@ -54,6 +62,7 @@ function App() {
         </Router>
       </ToastProvider>
     </AuthProvider>
+    </ErrorBoundary>
   );
 }
 
