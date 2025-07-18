@@ -5,6 +5,12 @@ const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
 const path = require('path');
 require('dotenv').config({ path: './config.env' });
+const Sentry = require('@sentry/node');
+Sentry.init({
+  dsn: process.env.SENTRY_DSN,
+  environment: process.env.NODE_ENV,
+  tracesSampleRate: 1.0,
+});
 
 // Import routes
 const authRoutes = require('./routes/auth');
@@ -35,6 +41,10 @@ app.use(cors({
   credentials: true
 }));
 
+// Sentry request handler (before all other middleware)
+app.use(Sentry.Handlers.requestHandler());
+app.use(Sentry.Handlers.tracingHandler());
+
 // Body parsing middleware
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
@@ -47,6 +57,9 @@ app.use('/api/auth', authRoutes);
 app.use('/api/comments', commentRoutes);
 app.use('/api/cv', cvRoutes);
 app.use('/api/contact', contactRoutes);
+
+// Sentry error handler (after all routes)
+app.use(Sentry.Handlers.errorHandler());
 
 // Health check endpoint
 app.get('/api/health', (req, res) => {
